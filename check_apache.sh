@@ -35,6 +35,13 @@ check_apache_version() {
         ERROR_FLAG=1
     fi
     echo "----------------------------------------"
+
+    if [[ $(echo -e "$HTTPD_VER\n$LATEST_HTTPD_VER" | sort -V | head -n1) == "$HTTPD_VER" && "$HTTPD_VER" != "$LATEST_HTTPD_VER" ]]; then
+        echo -e "${CONTAINER_NAME} - ${HTTPD_VER}$. {LATEST_HTTPD_VER}"
+    else
+        echo -e "${CONTAINER_NAME} - ${HTTPD_VER}"
+    fi
+
 }
 
 # Pętla po wszystkich kontenerach
