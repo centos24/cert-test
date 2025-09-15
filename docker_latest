@@ -20,3 +20,14 @@ command -v curl >/dev/null 2>&1 || { echo "curl is not installed!"; exit 1; }
 command -v jq >/dev/null 2>&1 || { echo "jq is not installed!"; exit 1; }
 
 check_latest_httpd_version
+
+tags=$(curl -s 'https://registry.hub.docker.com/v2/repositories/library/postgres/tags?page_size=100' | jq -r '.results[].name')
+
+latest_version=$(echo "$tags" | grep -E '^15\.[0-9]+$' | sort -V | tail -n 1)
+
+if [ -z "$latest_version" ]; then
+    echo "No version 15"
+    exit 1
+fi
+
+echo "Latest PostgreSQL 15: $latest_version"
