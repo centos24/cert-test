@@ -1,0 +1,11 @@
+module rsyslog_audit 1.0;
+
+require {
+    type syslogd_t;
+    type auditd_log_t;
+    class file { read ioctl open getattr };
+    class dir { search read open getattr };
+}
+
+allow syslogd_t auditd_log_t:file { read ioctl open getattr };
+allow syslogd_t auditd_log_t:dir { search read open getattr };
