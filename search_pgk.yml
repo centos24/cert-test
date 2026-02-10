@@ -17,5 +17,5 @@
           {% if keylime_packages | length > 0 %}
           Found package: {{ keylime_packages | join(', ') }}
           {% else %}
-          Nor found package.
+          Not found package.
           {% endif %}
