@@ -1,0 +1,21 @@
+---
+- name: Search package on system
+  hosts: all
+  become: true
+  tasks:
+    - name: Get info about all packages
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: search packages like...
+      ansible.builtin.set_fact:
+        keylime_packages: "{{ ansible_facts.packages | select('search', '^keylime') | list }}"
+
+    - name: Show results
+      ansible.builtin.debug:
+        msg: >
+          {% if keylime_packages | length > 0 %}
+          Found package: {{ keylime_packages | join(', ') }}
+          {% else %}
+          Nor found package.
+          {% endif %}
